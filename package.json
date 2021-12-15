@@ -6,6 +6,7 @@
   "author": "Clarkie <andrew.t.clarke@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "uuid": "^8.3.2"
   }
 }
