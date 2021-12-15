@@ -45,7 +45,7 @@ jobs:
         run: ls -al node_modules
 
   second-install:
-    name: From cache
+    name: Second install
     runs-on: ubuntu-latest
     needs: first-install
     steps:
