@@ -1,0 +1,66 @@
+name: Continuous Integration
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+jobs:
+  first-install:
+    name: Install first
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+      - name: Install dependencies
+        run: yarn install
+      - name: Output node_modules
+        run: ls -al node_modules
+
+  from-cache:
+    name: From cache
+    runs-on: ubuntu-latest
+    needs: first-install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+      - name: Output node_modules
+        run: ls -al node_modules
+
+  second-install:
+    name: From cache
+    runs-on: ubuntu-latest
+    needs: first-install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+      - name: Install dependencies
+        run: yarn install
+      - name: Output node_modules
+        run: ls -al node_modules
